@@ -1,0 +1,5 @@
+<li class="list-group-item" [ngClass]="{'completed': item.isCompleted}">
+    <input type="checkbox" [(ngModel)]="item.isCompleted" />
+    {{item.name}} <span [hidden]="item.isCompleted">- {{item.dueDate|date}}</span>
+    <button class="float-right btn btn-xs btn-danger" (click)="deleteItem(item.id)">X</button>
+</li>

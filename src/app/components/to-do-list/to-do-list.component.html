@@ -1,1 +1,20 @@
-<div *ngFor="let t of todos" class="h">{{t.id}} - {{t.name}} - {{t.dueDate}}</div>
+<div class="card">
+    <div class="card-header">
+        Todo Items : {{(todos|filter:search).length}} / {{todos.length}}
+        <input [(ngModel)]="search" placeholder="search..." class="form-control" />
+    </div>
+
+    <ul class="list-group list-group-flush">
+        <li *ngIf="todos.length==0" class="list-group-item">Please add your first Task</li>
+        <li *ngIf="todos.length>0 && (todos|filter:search).length==0" class="list-group-item">No Results</li>
+        <ng-container *ngFor="let td of todos|filter:search">
+            <app-to-do-item [item]="td" (delete)="delete($event)"></app-to-do-item>
+        </ng-container>
+    </ul>
+
+    <div class="card-footer">
+        <input [(ngModel)]="itemName" placeholder="Item Name" class="form-control">
+        <input [(ngModel)]="itemDate" type="date" placeholder="Item Name" class="form-control">
+        <button class="btn btn-success" (click)="addItem()">Add Item</button>
+    </div>
+</div>

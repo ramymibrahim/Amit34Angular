@@ -2,9 +2,6 @@ export class ToDo {
     id:number;
     name:string;
     dueDate:Date;
-    isCompleted?:boolean;
+    isCompleted:boolean;
 
-    public constructor(){
-        this.isCompleted=false;
-    }
 }
