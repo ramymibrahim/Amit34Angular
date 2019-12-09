@@ -5,8 +5,9 @@
     </div>
 
     <ul class="list-group list-group-flush">
-        <li *ngIf="todos.length==0" class="list-group-item">Please add your first Task</li>
-        <li *ngIf="todos.length>0 && (todos|filter:search).length==0" class="list-group-item">No Results</li>
+        <li *ngIf="!loading && todos.length==0" class="list-group-item">Please add your first Task</li>
+        <li *ngIf="!loading && todos.length>0 && (todos|filter:search).length==0" class="list-group-item">No Results</li>
+        <li *ngIf="loading" class="list-group-item">Loading...</li>
         <ng-container *ngFor="let td of todos|filter:search">
             <app-to-do-item [item]="td" (delete)="delete($event)"></app-to-do-item>
         </ng-container>

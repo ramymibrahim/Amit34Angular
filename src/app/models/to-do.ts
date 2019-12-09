@@ -1,7 +1,7 @@
 export class ToDo {
     id:number;
     name:string;
-    dueDate:Date;
-    isCompleted:boolean;
+    due_date:Date;
+    is_completed:boolean;
 
 }

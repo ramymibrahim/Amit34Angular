@@ -7,18 +7,22 @@ import { AppComponent } from './app.component';
 import { ToDoListComponent } from './components/to-do-list/to-do-list.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { ToDoItemComponent } from './components/to-do-item/to-do-item.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToDoListComponent,
     FilterPipe,
-    ToDoItemComponent,    
+    ToDoItemComponent,
+    LoginComponent,    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [FilterPipe],
   bootstrap: [AppComponent]

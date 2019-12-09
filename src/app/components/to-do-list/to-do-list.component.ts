@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToDo } from '../../models/to-do';
 import { FilterPipe } from 'src/app/pipes/filter.pipe';
+import { TodoService } from 'src/app/services/todo.service';
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
@@ -12,16 +13,25 @@ export class ToDoListComponent implements OnInit {
   search: string;
   itemName: string;
   itemDate: Date;
-  constructor(private filterPipe: FilterPipe) {
-
+  loading: boolean;
+  constructor(
+    private filterPipe: FilterPipe
+    , private todoService: TodoService) {
   }
 
   ngOnInit() {
-    this.todos = [
-      { id: 1, name: "Call Hamada", dueDate: new Date(2019, 12, 22), isCompleted: true }
-      , { id: 2, name: "Buy Tomato", dueDate: new Date(2019, 12, 22), isCompleted: false }
-      , { id: 3, name: "Study Physics", dueDate: new Date(2019, 12, 22), isCompleted: true }
-    ];
+    this.todoService.get().subscribe(
+      (data: Array<ToDo>) => {
+        this.loading = false;
+        this.todos = data;
+        console.log(data);
+      },
+      error => {
+        this.loading = false;
+        console.log(error);
+      });
+    this.todos = [];
+    this.loading = true;
   }
 
   addItem() {
@@ -29,12 +39,16 @@ export class ToDoListComponent implements OnInit {
       alert('Please enter valid data');
       return;
     }
-    this.todos.push({
-      id: 4, name: this.itemName, dueDate: this.itemDate, isCompleted: false
-    });
-    this.itemName = '';
-    this.itemDate = undefined;
-    this.refresh();
+    var data = { name: this.itemName, due_date: this.itemDate, is_completed: false };
+    this.todoService.add(data).subscribe((data: any) => {
+      this.todos.push(data.data);
+      this.itemName = '';
+      this.itemDate = undefined;
+      this.refresh();
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   refresh() {
